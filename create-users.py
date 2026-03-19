@@ -1,66 +1,65 @@
 #!/usr/bin/python3
 
 # INET4031
-# Your Name
-# Data Created
-# Date Last Modified
+# Trent
+# Date Last Modified: 3/19/2026
 
-#REPLACE THIS COMMENT - identify what each of these imports is for.
+# os: used to execute system commands
+# re: searches for patterns in text
+# sys: reads inout from the terminal
 import os
 import re
 import sys
 
-#YOUR CODE SHOULD HAVE NONE OF THE INSTRUCTORS COMMENTS REMAINING WHEN YOU ARE FINISHED
-#PLEASE REPLACE INSTRUCTOR "PROMPTS" WITH COMMENTS OF YOUR OWN
-
 def main():
     for line in sys.stdin:
 
-        #REPLACE THIS COMMENT - this "regular expression" is searching for the presence of a character - what is it and why?
-        #The important part is WHY it is looking for a particular characer - what is that character being used for?
+        # Checks if the line starts with "#", if so, it is a comment and not user data.
         match = re.match("^#",line)
-
-        #REPLACE THIS COMMENT - why is the code doing this?
+        
+        # Removes extra whitespace and splits the line using ":" as the divider.
         fields = line.strip().split(':')
 
-        #REPLACE THESE COMMENTS with a single comment describing the logic of the IF 
-        #what would an appropriate comment be for describing what this IF statement is checking for?
-        #what happens if the IF statement evaluates to true?
-        #how does this IF statement rely on what happened in the prior two lines of code? The match and fields lines.
-        #the code clearly shows that the variables match and the length of fields is being checked for being != 5  so why is it doing that?
+        # Skip this line if it is a commnet or does not have aexactly 5 fields.
+        # You need exactly 5 fileds to create a user account properly.
         if match or len(fields) != 5:
             continue
 
-        #REPLACE THIS COMMENT - what is the purpose of the next three lines. How does it relate to what is stored in the passwd file?
+        # Pull out each piece of users info from the fields.
+        # gecos is the full name format when creating accounts.
         username = fields[0]
         password = fields[1]
         gecos = "%s %s,,," % (fields[3],fields[2])
 
-        #REPLACE THIS COMMENT - why is this split being done?
+        # A user can be in multiple groups, then splits them wiht a comma into a list.
         groups = fields[4].split(',')
 
-        #REPLACE THIS COMMENT - what is the point of this print statement?
+        # Lets the admin know we are creating an account for this user.
         print("==> Creating account for %s..." % (username))
-        #REPLACE THIS COMMENT - what is this line doing?  What will the variable "cmd" contain.
+        
+        # Builds the command to create the user account that uses their full name with no need of a password.
+        # cmd will contain the full adduser command string and is ready to run.
         cmd = "/usr/sbin/adduser --disabled-password --gecos '%s' %s" % (gecos,username)
 
-        #REMOVE THIS COMMENT AFTER YOU UNDERSTAND WHAT TO DO - these statements are currently "commented out" as talked about in class
-        #The first time you run the code...what should you do here?  If uncommented - what will the os.system(cmd) statemetn attempt to do?
+        # Use print(cmd) first to verify the command before running it.
+        # Once it is verified, you should uncomment os.system(cmd) to actually create the account on the system.
         #print(cmd)
         #os.system(cmd)
 
-        #REPLACE THIS COMMENT - what is the point of this print statement?
+        # Lets the admin know we are setting the password for this user.
         print("==> Setting the password for %s..." % (username))
+        
         #REPLACE THIS COMMENT - what is this line doing?  What will the variable "cmd" contain. You'll need to lookup what these linux commands do.
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password,password,username)
 
-        #REMOVE THIS COMMENT AFTER YOU UNDERSTAND WHAT TO DO - these statements are currently "commented out" as talked about in class
-        #The first time you run the code...what should you do here?  If uncommented - what will the os.system(cmd) statemetn attempt to do?
+        # Same as previous one, Use print(cmd) first to verify the command before running it.
+        # Once it is verified, you should uncomment os.system(cmd) to actually create the account on the system.
         #print(cmd)
         #os.system(cmd)
 
         for group in groups:
-            #REPLACE THIS COMMENT with one that answers "What is this IF statement looking for and why? If group !='-' what happens?"
+            # The if group '-'  it means no group was assigned, so it skips it.
+            # If group is anything else, the user belongs to that group and you add them to it.
             if group != '-':
                 print("==> Assigning %s to the %s group..." % (username,group))
                 cmd = "/usr/sbin/adduser %s %s" % (username,group)
