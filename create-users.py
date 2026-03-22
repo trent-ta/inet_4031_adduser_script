@@ -49,7 +49,8 @@ def main():
         # Lets the admin know we are setting the password for this user.
         print("==> Setting the password for %s..." % (username))
         
-        #REPLACE THIS COMMENT - what is this line doing?  What will the variable "cmd" contain. You'll need to lookup what these linux commands do.
+        # This builds the command to set the users password.
+        # This sends the password twice to confirm it, and then sets it without any user interaction.
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password,password,username)
 
         # Same as previous one, Use print(cmd) first to verify the command before running it.
