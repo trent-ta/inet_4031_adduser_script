@@ -79,7 +79,7 @@ def main():
                 # In dry-run mode, print the command but do not run it.
                 # In real mode, run the command to actually add the user to the group.
                 print(cmd)
-                if dry_run == 'n':
+                if dry_run == 'N':
                     os.system(cmd)
 
 if __name__ == '__main__':
