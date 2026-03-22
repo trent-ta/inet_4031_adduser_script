@@ -43,19 +43,20 @@ def main():
 
         # Use print(cmd) first to verify the command before running it.
         # Once it is verified, you should uncomment os.system(cmd) to actually create the account on the system.
-        #print(cmd)
-        #os.system(cmd)
+        print(cmd)
+        # os.system(cmd)
 
         # Lets the admin know we are setting the password for this user.
         print("==> Setting the password for %s..." % (username))
         
-        #REPLACE THIS COMMENT - what is this line doing?  What will the variable "cmd" contain. You'll need to lookup what these linux commands do.
+        # This builds the command to set the users password.
+        # This sends the password twice to confirm it, and then sets it without any user interaction.
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password,password,username)
 
         # Same as previous one, Use print(cmd) first to verify the command before running it.
         # Once it is verified, you should uncomment os.system(cmd) to actually create the account on the system.
-        #print(cmd)
-        #os.system(cmd)
+        print(cmd)
+        # os.system(cmd)
 
         for group in groups:
             # The if group '-'  it means no group was assigned, so it skips it.
@@ -63,8 +64,8 @@ def main():
             if group != '-':
                 print("==> Assigning %s to the %s group..." % (username,group))
                 cmd = "/usr/sbin/adduser %s %s" % (username,group)
-                #print(cmd)
-                #os.system(cmd)
+                print(cmd)
+                # os.system(cmd)
 
 if __name__ == '__main__':
     main()
