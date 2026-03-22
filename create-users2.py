@@ -52,10 +52,8 @@ def main():
         # cmd will contain the full adduser command string and is ready to run.
         cmd = "/usr/sbin/adduser --disabled-password --gecos '%s' %s" % (gecos, username)
 
-        # In dry-run mode, print the command but do not run it.
-        # In real mode, run the command to actually create the account.
         if dry_run == 'Y':
-            print(cmd)
+            print("DRY RUN:", cmd)
         else:
             os.system(cmd)
 
@@ -66,10 +64,8 @@ def main():
         # It sends the password twice for confirmation and sets it without any user interaction.
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password, password, username)
 
-        # In dry-run mode, print the command but do not run it.
-        # In real mode, run the command to actually set the password.
         if dry_run == 'Y':
-            print(cmd)
+            print("DRY RUN:", cmd)
         else:
             os.system(cmd)
 
@@ -80,10 +76,8 @@ def main():
                 print("==> Assigning %s to the %s group..." % (username, group))
                 cmd = "/usr/sbin/adduser %s %s" % (username, group)
 
-                # In dry-run mode, print the command but do not run it.
-                # In real mode, run the command to actually add the user to the group.
                 if dry_run == 'Y':
-                    print(cmd)
+                    print("DRY RUN:", cmd)
                 else:
                     os.system(cmd)
 
