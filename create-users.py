@@ -44,7 +44,7 @@ def main():
         # Use print(cmd) first to verify the command before running it.
         # Once it is verified, you should uncomment os.system(cmd) to actually create the account on the system.
         print(cmd)
-        # os.system(cmd)
+        os.system(cmd)
 
         # Lets the admin know we are setting the password for this user.
         print("==> Setting the password for %s..." % (username))
@@ -56,7 +56,7 @@ def main():
         # Same as previous one, Use print(cmd) first to verify the command before running it.
         # Once it is verified, you should uncomment os.system(cmd) to actually create the account on the system.
         print(cmd)
-        # os.system(cmd)
+        os.system(cmd)
 
         for group in groups:
             # The if group '-'  it means no group was assigned, so it skips it.
@@ -65,7 +65,7 @@ def main():
                 print("==> Assigning %s to the %s group..." % (username,group))
                 cmd = "/usr/sbin/adduser %s %s" % (username,group)
                 print(cmd)
-                # os.system(cmd)
+                os.system(cmd)
 
 if __name__ == '__main__':
     main()
