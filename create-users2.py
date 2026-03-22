@@ -31,9 +31,9 @@ def main():
             # In dry-run mode, print out why the line was skipped
             if dry_run == 'Y':
                 if match:
-                    print("==> Skipping commented line: %s")
+                    print("==> Skipping commented line: %s" % line.strip())
                 else:
-                    print("==> Skipping line, not enough fields: %s")
+                    print("==> Skipping line, not enough fields: %s" % line.strip())
             continue
 
         # Pull out each piece of user info from the fields.
