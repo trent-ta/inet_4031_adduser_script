@@ -13,7 +13,9 @@ import sys
 
 def main():
     # Ask the user if they want to run in dry-run mode or for real
-    dry_run = input("Run in dry-run mode? (Y/N): ")
+    tty = open("/dev/tty", "r")
+    print("Run in dry-run mode? (Y/N): ", end="", flush=True)
+    dry_run = tty.readline().strip().upper()
 
     for line in sys.stdin:
 
