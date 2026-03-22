@@ -13,7 +13,9 @@ import sys
 
 def main():
     # Ask the user if they want to run in dry-run mode or for real
-    dry_run = input("Run in dry-run mode? (Y/N): ")
+    tty = open("/dev/tty", "r")
+    print("Run in dry-run mode? (Y/N): ", end="", flush=True)
+    dry_run = tty.readline().strip().upper()
 
     for line in sys.stdin:
 
@@ -50,10 +52,9 @@ def main():
         # cmd will contain the full adduser command string and is ready to run.
         cmd = "/usr/sbin/adduser --disabled-password --gecos '%s' %s" % (gecos, username)
 
-        # In dry-run mode, print the command but do not run it.
-        # In real mode, run the command to actually create the account.
-        print(cmd)
-        if dry_run == 'N':
+        if dry_run == 'Y':
+            print("DRY RUN:", cmd)
+        else:
             os.system(cmd)
 
         # Lets the admin know we are setting the password for this user.
@@ -63,10 +64,9 @@ def main():
         # It sends the password twice for confirmation and sets it without any user interaction.
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password, password, username)
 
-        # In dry-run mode, print the command but do not run it.
-        # In real mode, run the command to actually set the password.
-        print(cmd)
-        if dry_run == 'N':
+        if dry_run == 'Y':
+            print("DRY RUN:", cmd)
+        else:
             os.system(cmd)
 
         for group in groups:
@@ -76,10 +76,9 @@ def main():
                 print("==> Assigning %s to the %s group..." % (username, group))
                 cmd = "/usr/sbin/adduser %s %s" % (username, group)
 
-                # In dry-run mode, print the command but do not run it.
-                # In real mode, run the command to actually add the user to the group.
-                print(cmd)
-                if dry_run == 'n':
+                if dry_run == 'Y':
+                    print("DRY RUN:", cmd)
+                else:
                     os.system(cmd)
 
 if __name__ == '__main__':
